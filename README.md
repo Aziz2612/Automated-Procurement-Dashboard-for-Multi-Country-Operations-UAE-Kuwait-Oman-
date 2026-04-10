@@ -61,22 +61,6 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 
 ---
 
-## 📊 Dashboard Preview
-
-### 📦 PR Availability
-![PR1](images/pr_availability/PR%20Availability%201.png)
-![PR2](images/pr_availability/PR%20Availability%202.png)
-
-### 🚚 Delivery Performance (On-Time vs Delayed)
-![Delivery1](images/delivery_performance/Deliveries%201.png)
-![Delivery2](images/delivery_performance/Deliveries%202.png)
-
-### 🤝 Supplier Performance
-![Supplier1](images/supplier_performance/supplier_performance_1.png)
-![Supplier2](images/supplier_performance/supplier_performance_2.png)
-
---
--
 ## 📈 Business Impact
 
 - ⏱ Reduced manual reporting effort significantly  
@@ -120,3 +104,21 @@ Even without traditional BI tools, it's possible to build powerful, automated, a
 👉 [View Live Dashboard](https://script.google.com/macros/s/AKfycbzJSCrZtdrTym1QItygZG5DrC6fid8UDswReQwAAfOXeABWhEvKDOY-tjYR5tVOboHe9A/exec)
 
 > Fully automated dashboard powered by Google Apps Script, refreshing data every 15 minutes.
+
+---
+
+## 📊 Dashboard Preview
+
+### 📦 PR Availability
+![PR1](images/pr_availability/PR%20Availability%201.png)
+![PR2](images/pr_availability/PR%20Availability%202.png)
+
+### 🚚 Delivery Performance (On-Time vs Delayed)
+![Delivery1](images/delivery_performance/Deliveries%201.png)
+![Delivery2](images/delivery_performance/Deliveries%202.png)
+
+### 🤝 Supplier Performance
+![Supplier1](images/supplier_performance/Supplier%20Performance%201.png)
+![Supplier2](images/supplier_performance/Supplier%20Performance%202.png)
+
+
