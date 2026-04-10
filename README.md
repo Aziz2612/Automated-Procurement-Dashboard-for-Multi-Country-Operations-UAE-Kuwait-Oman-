@@ -61,6 +61,22 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 
 ---
 
+## 📊 Dashboard Preview
+
+### 📦 PR Availability
+![PR1](images/pr_availability/pr_availability_1.png)
+![PR2](images/pr_availability/pr_availability_2.png)
+
+### 🚚 Delivery Performance (On-Time vs Delayed)
+![Delivery1](images/delivery_performance/delivery_performance_1.png)
+![Delivery2](images/delivery_performance/delivery_performance_2.png)
+
+### 🤝 Supplier Performance
+![Supplier1](images/supplier_performance/supplier_performance_1.png)
+![Supplier2](images/supplier_performance/supplier_performance_2.png)
+
+--
+-
 ## 📈 Business Impact
 
 - ⏱ Reduced manual reporting effort significantly  
