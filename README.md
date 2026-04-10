@@ -77,6 +77,15 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 
 ---
 
+## 💻 Code Structure
+
+- `scripts/code.gs` → Backend logic (Google Apps Script)  
+- `frontend/index.html` → Dashboard UI & visualization  
+
+The system uses Apps Script as a lightweight backend to serve data dynamically to the frontend dashboard.
+
+---
+
 ## 🔗 How It Works
 
 1. Data is pulled from the main sheet → into a clean reporting sheet  
