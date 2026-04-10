@@ -68,8 +68,8 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 ![PR2](images/pr_availability/PR Availability 2.png)
 
 ### 🚚 Delivery Performance (On-Time vs Delayed)
-![Delivery1](images/delivery_performance/delivery_performance_1.png)
-![Delivery2](images/delivery_performance/delivery_performance_2.png)
+![Delivery1](images/delivery_performance/Deliveries%201.png)
+![Delivery2](images/delivery_performance/Deliveries%202.png)
 
 ### 🤝 Supplier Performance
 ![Supplier1](images/supplier_performance/supplier_performance_1.png)
