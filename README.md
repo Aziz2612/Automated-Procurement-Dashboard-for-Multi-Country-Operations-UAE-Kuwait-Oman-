@@ -88,3 +88,10 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 
 ## 💡 Key Takeaway
 Even without traditional BI tools, it's possible to build powerful, automated, and scalable data solutions using lightweight tools like Google Sheets and Apps Script.
+
+---
+
+## 🔗 Live Dashboard
+👉 [View Live Dashboard](https://script.google.com/macros/s/AKfycbzJSCrZtdrTym1QItygZG5DrC6fid8UDswReQwAAfOXeABWhEvKDOY-tjYR5tVOboHe9A/exec)
+
+> Fully automated dashboard powered by Google Apps Script, refreshing data every 15 minutes.
