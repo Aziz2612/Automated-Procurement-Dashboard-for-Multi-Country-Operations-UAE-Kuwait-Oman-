@@ -64,8 +64,8 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 ## 📊 Dashboard Preview
 
 ### 📦 PR Availability
-![PR1](images/pr_availability/pr_availability_1.png)
-![PR2](images/pr_availability/pr_availability_2.png)
+![PR1](images/pr_availability/PR Availability 1.png)
+![PR2](images/pr_availability/PR Availability 2.png)
 
 ### 🚚 Delivery Performance (On-Time vs Delayed)
 ![Delivery1](images/delivery_performance/delivery_performance_1.png)
