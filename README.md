@@ -11,7 +11,9 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 - Improve visibility of procurement performance  
 - Eliminate manual reporting effort  
 - Build an automated, real-time dashboard  
-- Enable faster and more informed decision-making  
+- Enable faster and more informed decision-making
+- Analyze product performance to support prioritization  
+- Forecast future demand to improve procurement planning  
 
 ---
 
@@ -41,7 +43,8 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 
 ### 3. Backend Processing
 - Built `Code.gs` functions to serve processed data  
-- Enabled dynamic data retrieval for dashboard consumption  
+- Enabled dynamic data retrieval for dashboard consumption
+- Implemented data aggregation and simple forecasting logic (moving average & trend analysis)  
 
 ---
 
@@ -57,7 +60,9 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 - 🔄 Automated data refresh (every 15 minutes)  
 - 📦 Procurement performance tracking across 3 countries  
 - 📈 Real-time visibility of key metrics  
-- ⚡ Eliminated manual reporting   
+- ⚡ Eliminated manual reporting
+- 📊 Product performance analysis to identify top and low-performing items  
+- 🔮 Demand forecasting using moving average and trend-based methods     
 
 ---
 
@@ -66,7 +71,8 @@ This project demonstrates how I transformed a manual, spreadsheet-based reportin
 - ⏱ Reduced manual reporting effort significantly  
 - 👀 Improved visibility across UAE, Kuwait, and Oman  
 - ⚡ Enabled faster decision-making for management  
-- 🔁 Created scalable and reusable reporting solution  
+- 🔁 Created scalable and reusable reporting solution
+- 📦 Improved demand planning and reduced risk of stock-outs  
 
 ---
 
@@ -118,7 +124,11 @@ Even without traditional BI tools, it's possible to build powerful, automated, a
 ![Delivery2](images/delivery_performance/Deliveries%202.png)
 
 ### 🤝 Supplier Performance
-![Supplier1](images/supplier_performance/Supplier%20Performance%201.png)
-![Supplier2](images/supplier_performance/Supplier%20Performance%202.png)
+![Supplier1](images/supplier_performance/supplierperformance1.png)
+![Supplier2](images/supplier_performance/supplierperformance2.png)
+
+### 📈 Product Performance
+![Product](images/product_performance/productperformance1.png)
+
 
 
