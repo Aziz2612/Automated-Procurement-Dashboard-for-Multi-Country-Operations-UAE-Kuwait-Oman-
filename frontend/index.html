@@ -3,18 +3,14 @@
 <head>
     <base target="_top">
     <meta charset="UTF-8">
-    <title>Procurement Dashboard</title>
+    <title>UAE Procurement Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    
     <style>
-        /* هنا بنحدد الألوان اللي هنستخدمها في الصفحة كلها */
         :root { --primary: #0f172a; --bg: #f8fafc; --accent: #3b82f6; --danger: #ef4444; --success: #22c55e; --warning: #f59e0b; }
-        
         body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: #1e293b; }
         
-        /* تنسيق الأزرار اللي فوق اللي بنقلب بيها بين الصفحات */
         .command-center { display: flex; gap: 15px; margin-bottom: 25px; justify-content: center; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .nav-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; }
         .nav-btn.active { background: var(--accent); color: white; }
@@ -23,32 +19,25 @@
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .header h2 { margin: 0; font-weight: 700; color: var(--primary); font-size: 22px; }
         
-        /* تنسيق المربع الأبيض اللي فيه خانات البحث والفلاتر */
         .filter-section { 
             background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
             margin-bottom: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; align-items: end;
         }
         .filter-group { display: flex; flex-direction: column; gap: 5px; position: relative; }
         .filter-group label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; }
-        .filter-control { padding: 9px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 12px; outline: none; width: 100%; box-sizing: border-box; }
+        .filter-control { padding: 9px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 12px; outline: none; background: white; }
 
-        /* تنسيق فلتر ال Status */
-        .multiselect { position: relative; width: 100%; }
-        .selectBox { position: relative; cursor: pointer; }
+        .multiselect-container { position: relative; width: 100%; }
+        .select-box { position: relative; cursor: pointer; }
         .overSelect { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
         #checkboxes {
             display: none; border: 1px solid #e2e8f0; border-radius: 8px; background: white;
-            position: absolute; width: 100%; z-index: 100; max-height: 200px; overflow-y: auto;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); top: 100%;
+            position: absolute; width: 100%; z-index: 100; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
-        #checkboxes label {
-            display: flex; align-items: center; padding: 8px 12px; font-size: 11px;
-            cursor: pointer; text-transform: none; color: #1e293b; font-weight: 400;
-        }
-        #checkboxes label:hover { background-color: #f1f5f9; }
-        #checkboxes input { margin-right: 10px; }
+        #checkboxes label { display: flex; align-items: center; padding: 8px; font-size: 12px; text-transform: none; color: #1e293b; cursor: pointer; transition: 0.2s; }
+        #checkboxes label:hover { background: #f1f5f9; }
+        #checkboxes input { margin-right: 10px; width: 16px; height: 16px; cursor: pointer; }
 
-        /* تنسيق ال KPIs Cards */
         .top-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .stat-card { background: white; padding: 15px; border-radius: 12px; border-left: 4px solid var(--accent); box-shadow: 0 1px 2px rgba(0,0,0,0.05); min-height: 90px; display: flex; flex-direction: column; justify-content: center; }
         .stat-card h3 { margin: 0; font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: 700; }
@@ -64,30 +53,28 @@
         .value-large { font-size: 32px; font-weight: 800; color: #0f172a; margin-bottom: 4px; line-height: 1; }
         .qty-muted { font-size: 13px; font-weight: 600; color: #94a3b8; }
 
-        /* تنسيق كروت Categories (Home, Electronics, etc) */
         #cat-section { display: none; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .cat-card { background: white; padding: 15px; border-radius: 12px; border-top: 3px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .cat-title { font-size: 13px; font-weight: 800; color: var(--primary); border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 10px; text-transform: uppercase; }
         .cat-stat { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; }
 
-        /* تنسيق خط سير الطلبات (Pipeline) */
         .pipeline-box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .pipeline-container { display: flex; justify-content: space-between; align-items: center; position: relative; max-width: 900px; margin: 0 auto; }
         .pipeline-line { position: absolute; top: 32px; left: 10%; right: 10%; height: 4px; background: #e2e8f0; z-index: 1; }
         .pipeline-point { position: relative; z-index: 3; text-align: center; width: 25%; }
         .dot { width: 14px; height: 14px; background: white; border: 3px solid var(--accent); border-radius: 50%; margin: 10px auto; }
         
-        /* تنسيق أماكن الرسومات البيانية */
         .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .chart-container-box { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         
-        /* تنسيق الجدول اللي فيه كل البيانات */
         .table-box { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); height: 500px; overflow: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; }
         th { background: #f8fafc; position: sticky; top: 0; padding: 10px; border-bottom: 2px solid #e2e8f0; z-index: 10; text-align: left; }
         td { padding: 10px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; }
 
-        /* الخط اللي بيتحرك فوق لما الصفحة بتحمل */
+        /* Forecast Styling */
+        .forecast-tag { background: #eff6ff; color: #2563eb; padding: 2px 6px; border-radius: 4px; font-weight: 600; font-size: 10px; border: 1px solid #dbeafe; }
+
         .loader { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: #e2e8f0; z-index: 1000; display: none; }
         .loader-bar { height: 100%; background: var(--accent); width: 40%; animation: slide 1.5s infinite linear; }
         @keyframes slide { from { left: -40%; } to { left: 100%; } }
@@ -107,6 +94,9 @@
         <button onclick="switchDashboard('supplier')" id="btn-supplier" class="nav-btn inactive">
             <i class="fas fa-handshake"></i> Supplier Performance
         </button>
+        <button onclick="switchDashboard('product')" id="btn-product" class="nav-btn inactive">
+            <i class="fas fa-boxes"></i> Product Performance
+        </button>
     </div>
 
     <div class="header">
@@ -121,9 +111,11 @@
         
         <div class="filter-group">
             <label>Status</label>
-            <div class="multiselect">
-                <div class="selectBox" onclick="toggleStatusDropdown()">
-                    <select class="filter-control"><option id="statusPlaceholder">All Statuses</option></select>
+            <div class="multiselect-container">
+                <div class="select-box" onclick="toggleCheckboxes()">
+                    <select class="filter-control" style="width: 100%;">
+                        <option id="statusPlaceholder">Select Statuses</option>
+                    </select>
                     <div class="overSelect"></div>
                 </div>
                 <div id="checkboxes"></div>
@@ -163,54 +155,60 @@
     </div>
 
 <script>
-    let allData = []; // هنا هنخزن كل البيانات اللي جاية من الشيت
-    let currentMode = 'deliveries'; // ده المتغير اللي بيعرفنا إحنا في أنهي صفحة دلوقتي
+    let allData = [];
+    let currentMode = 'deliveries'; 
+    let expanded = false;
+
     google.charts.load('current', {'packages':['corechart']});
 
-    // أول ما الصفحة تفتح بنشغل اللودر ونجهز الداتا
     window.onload = () => {
         document.getElementById('loader').style.display = 'block';
-        
-        /* هنا المفروض ننده على البيانات من جوجل شيت */
-        allData = []; 
-        
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('lastSync').innerText = 'Synced: ' + new Date().toLocaleTimeString();
-        populateDynamicFilters(); // بنجهز فلاتر الحالات
-        switchDashboard('deliveries'); // بنفتح صفحة الـ Deliveries كبداية
+        google.script.run.withSuccessHandler(data => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('lastSync').innerText = 'Synced: ' + new Date().toLocaleTimeString();
+            allData = JSON.parse(data.rows);
+            populateDynamicFilters(); 
+            switchDashboard('deliveries'); 
+        }).getRawData();
     };
 
-    // معادلة بتفتح وبتقفل قائمة اختيار الحالات (Status)
-    function toggleStatusDropdown() {
-        const cb = document.getElementById("checkboxes");
-        cb.style.display = cb.style.display === "block" ? "none" : "block";
-    }
-
-    // لو دوست في أي حتة فاضية في الصفحة اقفل قائمة الحالات
-    window.onclick = function(e) {
-        if (!e.target.closest('.multiselect')) {
-            document.getElementById("checkboxes").style.display = "none";
+    function toggleCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
         }
     }
 
-    // معادلة بتشوف كل الحالات اللي موجودة في الداتا وبتحطها في الفلتر تلقائياً
+    document.addEventListener('click', function(e) {
+        const container = document.querySelector('.multiselect-container');
+        if (container && !container.contains(e.target)) {
+            document.getElementById("checkboxes").style.display = "none";
+            expanded = false;
+        }
+    });
+
     function populateDynamicFilters() {
         const statuses = [...new Set(allData.map(r => r.Status))].filter(s => s && s.toLowerCase() !== 'canceled');
-        const container = document.getElementById('checkboxes');
-        container.innerHTML = '';
+        const checkboxContainer = document.getElementById('checkboxes');
+        checkboxContainer.innerHTML = '';
+        
         statuses.forEach(s => {
-            let label = document.createElement('label');
+            const label = document.createElement('label');
             label.innerHTML = `<input type="checkbox" value="${s}" onchange="applyFilters()"> ${s}`;
-            container.appendChild(label);
+            checkboxContainer.appendChild(label);
         });
     }
 
-    // معادلة بتغير شكل الصفحة والعناوين لما تدوس على زرار فوق
     function switchDashboard(mode) {
         currentMode = mode;
         const btnDel = document.getElementById('btn-deliveries');
         const btnAvail = document.getElementById('btn-availability');
         const btnSup = document.getElementById('btn-supplier');
+        const btnProd = document.getElementById('btn-product');
         const dashTitle = document.getElementById('dash-title');
         const labelFrom = document.getElementById('label-date-from');
         const labelTo = document.getElementById('label-date-to');
@@ -218,7 +216,7 @@
         const chartsSec = document.getElementById('charts-section');
         const catSection = document.getElementById('cat-section');
         
-        [btnDel, btnAvail, btnSup].forEach(b => b.className = 'nav-btn inactive');
+        [btnDel, btnAvail, btnSup, btnProd].forEach(b => b.className = 'nav-btn inactive');
 
         if (mode === 'deliveries') {
             btnDel.className = 'nav-btn active';
@@ -226,49 +224,57 @@
             labelFrom.innerText = "Date From (ETA)";
             labelTo.innerText = "Date To (ETA)";
             pipeSec.style.display = 'block'; chartsSec.style.display = 'grid'; catSection.style.display = 'none';
+            document.getElementById('status_chart_title').innerText = "PRs by Status";
+            document.getElementById('region_chart_title').innerText = "PRs by Region";
         } else if (mode === 'availability') {
             btnAvail.className = 'nav-btn active';
             dashTitle.innerText = "PR Availability Dashboard";
             labelFrom.innerText = "Date From (PR Date)";
             labelTo.innerText = "Date To (PR Date)";
             pipeSec.style.display = 'block'; chartsSec.style.display = 'grid'; catSection.style.display = 'grid';
-        } else {
+            document.getElementById('status_chart_title').innerText = "PRs by Status";
+            document.getElementById('region_chart_title').innerText = "PRs by Region";
+        } else if (mode === 'supplier') {
             btnSup.className = 'nav-btn active';
             dashTitle.innerText = "Supplier Performance Dashboard";
             labelFrom.innerText = "Date From (Inv Date)";
             labelTo.innerText = "Date To (Inv Date)";
             pipeSec.style.display = 'none'; chartsSec.style.display = 'grid'; catSection.style.display = 'none';
+            document.getElementById('status_chart_title').innerText = "Spend by Payment Term";
+            document.getElementById('region_chart_title').innerText = "Spend by Region";
+        } else {
+            btnProd.className = 'nav-btn active';
+            dashTitle.innerText = "Product Performance & Forecasting";
+            labelFrom.innerText = "Date From (PR Date)";
+            labelTo.innerText = "Date To (PR Date)";
+            pipeSec.style.display = 'none'; chartsSec.style.display = 'none'; catSection.style.display = 'none';
         }
-        applyFilters(); // بعد ما نقلب الصفحة، نفلتر الداتا عشان تظهر صح
+        applyFilters();
     }
 
-    // معادلة "الفلتر الذكي": بتفلتر الداتا بناءً على كل اللي المستخدم اختاره
     function applyFilters() {
         const search = document.getElementById('searchBox').value.toLowerCase();
         const country = document.getElementById('countryFilter').value;
         const cat = document.getElementById('catFilter').value; 
         const from = document.getElementById('dateFrom').value;
         const to = document.getElementById('dateTo').value;
-        
-        // بنعرف إيه الحالات اللي متعلم عليها صح
         const selectedStatuses = Array.from(document.querySelectorAll('#checkboxes input:checked')).map(cb => cb.value);
+        
         const placeholder = document.getElementById('statusPlaceholder');
-        placeholder.innerText = selectedStatuses.length > 0 ? selectedStatuses.length + " Selected" : "All Statuses";
+        placeholder.innerText = selectedStatuses.length > 0 ? `${selectedStatuses.length} Selected` : "Select Statuses";
 
-        // بنبدأ نصفي البيانات حتة حتة
         const filtered = allData.filter(r => {
-            if (String(r.Status || '').trim().toLowerCase() === 'canceled') return false; // بنشيل الملغي
+            if (String(r.Status || '').trim().toLowerCase() === 'canceled') return false;
             const mSearch = Object.values(r).some(v => String(v).toLowerCase().includes(search));
             const mCountry = country === "" || r['Req Country'] === country;
-            const mStatus = selectedStatuses.length === 0 || selectedStatuses.includes(r['Status']);
             const mCat = cat === "" || String(r['CAT']).trim() === cat; 
+            const mStatus = selectedStatuses.length === 0 || selectedStatuses.includes(r['Status']);
             
-            // فلتر التاريخ بيختلف حسب الصفحة اللي إحنا واقفين فيها
             let mDate = true;
             let dateKey;
             if (currentMode === 'deliveries') dateKey = 'ETA';
-            else if (currentMode === 'availability') dateKey = 'PR Date';
-            else dateKey = 'Inv Date';
+            else if (currentMode === 'supplier') dateKey = 'Inv Date';
+            else dateKey = 'PR Date';
 
             let rowDateRaw = r[dateKey];
             if (from || to) {
@@ -281,10 +287,9 @@
             }
             return mSearch && mCountry && mStatus && mCat && mDate;
         });
-        updateUI(filtered); // بنحدث الصفحة بالبيانات الجديدة المصفاة
+        updateUI(filtered);
     }
 
-    // معادلة بتوزع البيانات المفلترة على كل حتة في الصفحة
     function updateUI(data) {
         const uniquePRsSet = new Set(data.map(r => String(r['PR Code'] || '').trim()).filter(v => v && v !== '-'));
         document.getElementById('total-prs').innerText = uniquePRsSet.size;
@@ -299,15 +304,127 @@
             calculatePipeline(data, uniquePRsSet.size);
             renderTable(data);
             drawStatusDonut(data); drawRegionDonut(data);
-        } else {
+        } else if (currentMode === 'supplier') {
             renderSupplierDashboard(data);
+        } else {
+            renderProductDashboard(data);
         }
     }
 
-    // حسابات خاصة بصفحة الموردين (المبالغ وأداء المورد)
+    function renderProductDashboard(data) {
+    const products = {};
+    const from = document.getElementById('dateFrom').value;
+    const to = document.getElementById('dateTo').value;
+    
+    // حساب فرق الأيام للتنبؤ (الافتراضي 30 يوم إذا لم يتم اختيار تاريخ)
+    let daysDiff = 30;
+    if (from && to) {
+        daysDiff = Math.max(1, (new Date(to) - new Date(from)) / (1000 * 60 * 60 * 24));
+    }
+
+    // تجميع البيانات لكل منتج
+    data.forEach(r => {
+        const pCode = String(r['Product Code'] || 'N/A').trim();
+        if (!products[pCode]) {
+            products[pCode] = { 
+                code: pCode, 
+                name: r['Product Name'] || '-', 
+                cat: r['CAT'] || '-', 
+                country: r['Req Country'] || '-', 
+                reqQty: 0, 
+                invQty: 0, 
+                totalPrice: 0, 
+                prs: new Set(),
+                history: {} // لتخزين التاريخ الشهري للمتوسط المتحرك والتريند
+            };
+        }
+        
+        const rQty = parseFloat(String(r['REQ QTY'] || 0).replace(/,/g, '')) || 0;
+        const iQty = parseFloat(String(r["Invoice Qty's"] || 0).replace(/,/g, '')) || 0;
+        const tPrice = parseFloat(String(r['Total Actual Price'] || 0).replace(/,/g, '')) || 0;
+
+        products[pCode].reqQty += rQty;
+        products[pCode].invQty += iQty;
+        products[pCode].totalPrice += tPrice;
+        
+        if (r['PR Code'] && r['PR Code'] !== '-') {
+            products[pCode].prs.add(r['PR Code']);
+        }
+
+        // تسجيل التاريخ الشهري بناءً على الـ PR Date
+        const d = new Date(r['PR Date']);
+        if (!isNaN(d.getTime())) {
+            const monthKey = d.getFullYear() + '-' + (d.getMonth() + 1);
+            products[pCode].history[monthKey] = (products[pCode].history[monthKey] || 0) + rQty;
+        }
+    });
+
+    // تحديث كروت الإحصائيات العلوية
+    const totalSpend = Object.values(products).reduce((sum, p) => sum + p.totalPrice, 0);
+    document.getElementById('dynamic-cards-container').innerHTML = `
+        <div class="stat-card" style="border-left-color: var(--success);"><h3>Unique Products</h3><p>${Object.keys(products).length}</p></div>
+        <div class="stat-card" style="border-left-color: var(--accent);"><h3>Total Product Spend</h3><p>AED ${Math.round(totalSpend).toLocaleString()}</p></div>
+    `;
+
+    // بناء رأس الجدول
+    const head = document.getElementById('tableHeader'), body = document.getElementById('tableBody');
+    head.innerHTML = `
+        <th>Product Code</th>
+        <th>Product Name</th>
+        <th>CAT</th>
+        <th>Country</th>
+        <th>Total PRs</th>
+        <th>Total Req QTY</th>
+        <th>Total Inv QTY</th>
+        <th>Total Spend (AED)</th>
+        <th>Simple Forecast</th>
+        <th>Moving Avg</th>
+        <th>Trend</th>
+    `;
+    
+    // ترتيب المنتجات حسب الأكثر صرفاً
+    const sorted = Object.values(products).sort((a, b) => b.totalPrice - a.totalPrice);
+    
+    // ملء بيانات الجدول
+    body.innerHTML = sorted.map(p => {
+        // 1. Simple Forecast
+        const forecast = Math.round((p.reqQty / daysDiff) * 30);
+        
+        // 2. Moving Average (آخر 3 شهور)
+        const historyValues = Object.values(p.history);
+        const movingAvg = historyValues.length > 0 ? 
+            Math.round(historyValues.slice(-3).reduce((a, b) => a + b, 0) / Math.min(historyValues.length, 3)) : 0;
+        
+        // 3. Trend Analysis
+        let trendHtml = 'Stable ▬';
+        if (historyValues.length >= 2) {
+            const lastMonth = historyValues[historyValues.length - 1];
+            const prevMonth = historyValues[historyValues.length - 2];
+            if (lastMonth > prevMonth * 1.1) trendHtml = '<span style="color:var(--success)">Increasing ▲</span>';
+            else if (lastMonth < prevMonth * 0.9) trendHtml = '<span style="color:var(--danger)">Decreasing ▼</span>';
+        }
+
+        return `
+        <tr>
+            <td style="font-weight:700; color:var(--accent)">${p.code}</td>
+            <td>${p.name}</td>
+            <td>${p.cat}</td>
+            <td>${p.country}</td>
+            <td style="text-align:center; font-weight:700;">${p.prs.size}</td>
+            <td>${Math.round(p.reqQty).toLocaleString()}</td>
+            <td>${Math.round(p.invQty).toLocaleString()}</td>
+            <td style="font-weight:700;">${Math.round(p.totalPrice).toLocaleString()}</td>
+            <td><span class="forecast-tag">${forecast.toLocaleString()}</span></td>
+            <td><span class="forecast-tag" style="background:#f0fdf4; color:#166534;">${movingAvg.toLocaleString()}</span></td>
+            <td style="font-weight:700; font-size:10px;">${trendHtml}</td>
+        </tr>`;
+    }).join('');
+}
+
     function renderSupplierDashboard(data) {
         const suppliers = {};
         const countrySpend = {};
+        const paymentTermsData = {};
         let totalSpend = 0;
         let totalInvQty = 0;
         
@@ -316,16 +433,24 @@
             const country = r['Req Country'] || 'Unknown';
             const actualQty = parseFloat(String(r["Invoice Qty's"] || 0).replace(/,/g, '')) || 0;
             const totalActualPrice = parseFloat(String(r['Total Actual Price'] || 0).replace(/,/g, '')) || 0;
-            const pTerm = r['Payment Term PR PO Sheet'] || '-';
+            const pTerm = String(r['Payment Term PR PO Sheet'] || 'Not Defined').trim();
+            const prCode = String(r['PR Code'] || '').trim();
 
             totalInvQty += actualQty;
+
+            if (!paymentTermsData[pTerm]) {
+                paymentTermsData[pTerm] = { spend: 0, prs: new Set() };
+            }
+            paymentTermsData[pTerm].spend += totalActualPrice;
+            if(prCode && prCode !== '-') paymentTermsData[pTerm].prs.add(prCode);
+
             if (!sName || sName === '-') return;
-            
             if (!suppliers[sName]) { 
-                suppliers[sName] = { name: sName, term: pTerm, prs: new Set(), qty: 0, spend: 0 }; 
+                suppliers[sName] = { name: sName, terms: new Set(), prs: new Set(), qty: 0, spend: 0 }; 
             }
             
-            suppliers[sName].prs.add(String(r['PR Code']).trim()); 
+            if (pTerm !== 'Not Defined') suppliers[sName].terms.add(pTerm);
+            suppliers[sName].prs.add(prCode); 
             suppliers[sName].qty += actualQty; 
             suppliers[sName].spend += totalActualPrice;
             totalSpend += totalActualPrice;
@@ -338,20 +463,40 @@
             <div class="stat-card" style="border-left-color: var(--success);"><h3>Total Spend (Actual)</h3><p>AED ${Math.round(totalSpend).toLocaleString()}</p></div>`;
         
         drawSupplierSpendDonut(countrySpend);
+        drawPaymentTermsDonut(paymentTermsData);
+
         const head = document.getElementById('tableHeader'), body = document.getElementById('tableBody');
-        head.innerHTML = `<th>Supplier Name</th><th>Payment Term</th><th>Total PRs</th><th>Total Actual Qty</th><th>Total Price (AED)</th>`;
+        head.innerHTML = `<th>Supplier Name</th><th>Payment Terms</th><th>Total PRs</th><th>Total Actual Qty</th><th>Total Price (AED)</th>`;
+        
         const sortedSuppliers = Object.values(suppliers).sort((a, b) => b.spend - a.spend);
-        body.innerHTML = sortedSuppliers.map(s => `
+        body.innerHTML = sortedSuppliers.map(s => {
+            const termsString = s.terms.size > 0 ? Array.from(s.terms).join(', ') : '-';
+            return `
             <tr>
                 <td style="font-weight:700; color:var(--accent)">${s.name}</td>
-                <td>${s.term}</td>
+                <td style="white-space: normal; max-width: 250px;">${termsString}</td>
                 <td>${s.prs.size}</td>
                 <td>${Math.round(s.qty).toLocaleString()}</td>
                 <td style="font-weight:700;">${Math.round(s.spend).toLocaleString()}</td>
-            </tr>`).join('');
+            </tr>`;
+        }).join('');
     }
 
-    // معادلة لرسم دايرة بتوضح بنصرف فلوسنا في أنهي بلد أكتر
+    function drawPaymentTermsDonut(termsData) {
+        const chartArray = [['Term', 'Spend', { role: 'tooltip' }]];
+        for (const [term, info] of Object.entries(termsData)) {
+            const tooltip = `Term: ${term}\nSpend: AED ${Math.round(info.spend).toLocaleString()}\nPRs: ${info.prs.size}`;
+            chartArray.push([term, info.spend, tooltip]);
+        }
+        const data = google.visualization.arrayToDataTable(chartArray);
+        new google.visualization.PieChart(document.getElementById('status_donut')).draw(data, {
+            pieHole: 0.5,
+            chartArea: {width: '90%', height: '80%'},
+            legend: {position: 'bottom', textStyle: {fontSize: 9}},
+            pieSliceText: 'percentage'
+        });
+    }
+
     function drawSupplierSpendDonut(spendData) {
         const chartArray = [['Country', 'Total Spend']];
         for (const [country, spend] of Object.entries(spendData)) { chartArray.push([country, spend]); }
@@ -364,7 +509,6 @@
         });
     }
 
-    // حساب كم طلب وصل في ميعاده وكم واحد اتأخر
     function renderDeliveriesStats(data, totalCount) {
         let otPRs = new Set(), delayPRs = new Set();
         let otQty = 0, delayQty = 0;
@@ -373,7 +517,7 @@
                 const prCode = String(r['PR Code']).trim();
                 const eta = new Date(r.ETA), act = new Date(r['Actual date']);
                 const rowRef = parseFloat(String(r['Relfected QTY'] || 0).replace(/,/g, '')) || 0;
-                if (r['Actual date'] && !isNaN(act)) {
+                if (r['Actual date'] && !isNaN(act.getTime())) {
                     if (act <= eta) { otPRs.add(prCode); otQty += rowRef; }
                     else { delayPRs.add(prCode); delayQty += rowRef; }
                 }
@@ -391,7 +535,6 @@
             </div>`;
     }
 
-    // حساب نسبة تنفيذ الطلبات والوفر اللي عملناه في الفلوس (Saving)
     function renderAvailabilityStats(data) {
         let totalSaving = 0;
         const totalPRsCount = new Set(data.map(r => String(r['PR Code'] || '').trim()).filter(v => v && v !== '-')).size;
@@ -412,7 +555,6 @@
             <div class="stat-card" style="border-left-color: var(--accent);"><h3>Fulfillment Rate</h3><p>${globalFulfillment}%</p></div>
             <div class="stat-card" style="border-left-color: ${sColor};"><h3>Procurement Saving</h3><p style="color: ${sColor}; font-size: 20px;">AED ${Math.round(totalSaving).toLocaleString()}</p></div>`;
 
-        // بنرسم كروت الأقسام (Home, Consumables...) تحت بعض في صفحة الـ Availability
         const cats = ["Home", "Consumables", "Electronics", "Leisure"];
         let catHtml = '';
         cats.forEach(cName => {
@@ -430,7 +572,6 @@
         document.getElementById('cat-section').innerHTML = catHtml;
     }
 
-    // معادلة بتمشي ورا الكميات وتعرف كام قطعة في كل مرحلة من مراحل الشراء
     function calculatePipeline(data, totalPRs) {
         let prsInvSet = new Set(), prsTransitSet = new Set(), prsRefSet = new Set();
         let sReq = 0, sInv = 0, sTransit = 0, sRef = 0;
@@ -458,22 +599,19 @@
         document.getElementById('pct-ref').innerText = (sReq>0?Math.round((sRef/sReq)*100):0)+'%';
     }
 
-    // معادلة مسؤولة عن كتابة سطور الجدول بناءً على البيانات
     function renderTable(data) {
         const head = document.getElementById('tableHeader'), body = document.getElementById('tableBody');
-        const cols = ["Status", "PR Code", "Odoo NO", "PR Date", "Product Code", "Product Name", "CAT", "Req Country", "REQ QTY", "Invoice Qty's", "Actual Price", "LPP", "Supplier Name", "Shipping Company", "Batch NO", "MRV", "Actual date", "Relfected QTY", "ETA", "Inv Date"];
+        const cols = ["Status", "PR Code", "Odoo NO", "PR Date", "Product Code", "Product Name", "CAT", "Req Country", "REQ QTY", "Invoice Qty's", "Actual Price", "LPP", "Supplier Name", "Approval date", "ETA", "Inv Date", "Actual date"];
         head.innerHTML = cols.map(k => `<th>${k}</th>`).join('');
-        body.innerHTML = data.length ? data.map(r => `<tr>${cols.map(k => `<td>${r[k]||'-'}</td>`).join('')}</tr>`).join('') : '<tr><td colspan="20">No Data</td></tr>';
+        body.innerHTML = data.length ? data.map(r => `<tr>${cols.map(k => `<td>${r[k]||'-'}</td>`).join('')}</tr>`).join('') : '<tr><td colspan="15">No Data</td></tr>';
     }
 
-    // رسم الدائرة اللي بتوضح توزيع الطلبات حسب الحالة (شحن، استلام، إلخ)
     function drawStatusDonut(data) {
         const counts = {}; data.forEach(r => counts[r.Status] = (counts[r.Status] || 0) + 1);
         const chartData = google.visualization.arrayToDataTable([['Status', 'Count'], ...Object.entries(counts)]);
         new google.visualization.PieChart(document.getElementById('status_donut')).draw(chartData, { pieHole: 0.5, chartArea: {width: '90%', height: '80%'}, legend: {position: 'bottom', textStyle: {fontSize: 9}} });
     }
 
-    // رسم الدائرة اللي بتوضح توزيع الطلبات حسب الدولة (إقليم)
     function drawRegionDonut(data) {
         const regionCounts = {}; const seenPRs = new Set();
         data.forEach(r => { const prCode = String(r['PR Code']).trim(); const country = r['Req Country'] || 'Unknown'; if (!seenPRs.has(prCode + country) && prCode !== '-') { regionCounts[country] = (regionCounts[country] || 0) + 1; seenPRs.add(prCode + country); } });
@@ -481,7 +619,6 @@
         new google.visualization.PieChart(document.getElementById('region_donut')).draw(chartData, { pieHole: 0.5, chartArea: {width: '90%', height: '80%'}, legend: {position: 'bottom', textStyle: {fontSize: 9}} });
     }
 
-    // معادلة زرار الـ RESET: بتمسح كل اللي كتبته في الفلاتر وترجع كل حاجة زي ما كانت
     function resetFilters() {
         document.getElementById('searchBox').value = '';
         document.getElementById('countryFilter').value = '';
